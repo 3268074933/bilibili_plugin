@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>B站图片提取器</title>
+  <link rel="stylesheet" href="viewer.css">
+</head>
+<body>
+  <header class="topbar" id="topbar">
+    <div class="topbar__main">
+      <div class="meta">
+        <h1 class="meta__title" id="title">加载中…</h1>
+        <span class="meta__count" id="count"></span>
+      </div>
+
+      <div class="filters" id="filters" role="group" aria-label="图片筛选">
+        <button class="chip is-active" type="button" data-filter="all">全部</button>
+        <button class="chip" type="button" data-filter="cover">封面</button>
+        <button class="chip" type="button" data-filter="page">页面图片</button>
+        <button class="chip" type="button" data-filter="recommend">推荐</button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <label class="prefix">
+        <span class="prefix__label">文件名前缀</span>
+        <input id="prefix" class="prefix__input" type="text" maxlength="60" placeholder="默认使用视频标题" autocomplete="off">
+      </label>
+      <button id="selectAll" class="btn btn--ghost" type="button">全选</button>
+      <button id="downloadSelected" class="btn btn--primary" type="button" disabled
+              title="统计所有已勾选的图片，不受筛选影响">下载选中 (0)</button>
+      <button id="downloadAll" class="btn btn--soft" type="button">下载全部</button>
+    </div>
+  </header>
+
+  <main class="main" id="main">
+    <div class="grid" id="grid" aria-live="polite"></div>
+    <p class="no-match" id="noMatch" hidden>当前筛选下没有图片。</p>
+  </main>
+
+  <section class="progress" id="progress" hidden aria-live="polite">
+    <div class="progress__head">
+      <span class="progress__text" id="progressText">准备中…</span>
+      <div class="progress__tools">
+        <button id="progressToggle" class="btn btn--ghost btn--small" type="button"
+                aria-expanded="true">收起</button>
+        <button id="cancelDownload" class="btn btn--ghost btn--small" type="button">取消</button>
+      </div>
+    </div>
+    <div class="progress__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar">
+      <div class="progress__fill" id="progressFill"></div>
+    </div>
+    <div class="failures" id="failures" hidden></div>
+  </section>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox__close" id="lbClose" type="button" aria-label="关闭">×</button>
+    <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" type="button" aria-label="上一张">‹</button>
+    <img class="lightbox__img" id="lbImage" alt="">
+    <button class="lightbox__nav lightbox__nav--next" id="lbNext" type="button" aria-label="下一张">›</button>
+    <div class="lightbox__counter" id="lbCounter"></div>
+  </div>
+
+  <section class="empty" id="empty" hidden>
+    <svg class="empty__icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="8" y="12" width="48" height="40" rx="6"></rect>
+      <circle cx="22" cy="26" r="4"></circle>
+      <path d="m56 42-12-12L16 52"></path>
+    </svg>
+    <h2 class="empty__title">没有可展示的图片</h2>
+    <p class="empty__text" id="emptyText"></p>
+    <button id="backToBili" class="btn btn--primary" type="button">返回 B 站</button>
+  </section>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <footer class="foot">
+    所有图片将转换为 PNG 后下载。原图多为 JPEG / WebP，转换会丢失 EXIF 等元数据。
+  </footer>
+
+  <script src="viewer.js"></script>
+</body>
+</html>

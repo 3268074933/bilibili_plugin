@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "B站图片提取器",
+  "version": "1.0.0",
+  "description": "从 B 站视频页提取视频封面与页面大图，勾选后下载为 PNG。",
+  "minimum_chrome_version": "109",
+  "permissions": ["storage", "downloads"],
+  "host_permissions": [
+    "https://*.bilibili.com/*",
+    "https://*.hdslb.com/*",
+    "https://*.biliimg.com/*",
+    "https://*.bilivideo.com/*"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.bilibili.com/video/*"],
+      "js": ["content/content.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_title": "B站图片提取器"
+  }
+}
